@@ -1,0 +1,5 @@
+---
+- version: v1alpha1
+  group: sitewhere.io
+  kind: SiteWhere
+  chart: /opt/helm/helm-charts/sitewhere
