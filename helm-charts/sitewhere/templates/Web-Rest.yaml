@@ -2,7 +2,7 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-web-rest
+  name: {{ include "sitewhere.web-rest.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -14,12 +14,12 @@ spec:
   replicas: {{ .Values.services.web_rest.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+      app.kubernetes.io/name: {{ include "sitewhere.web-rest.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+        app.kubernetes.io/name: {{ include "sitewhere.web-rest.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "microservice"
         sitewhere.io/name: "web-rest"
@@ -47,7 +47,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-web-rest-grpc
+  name: {{ include "sitewhere.web-rest.grpc" . }}
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -65,13 +65,13 @@ spec:
       protocol: TCP
       name: grcp-mgn
   selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+    app.kubernetes.io/name: {{ include "sitewhere.web-rest.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-web-rest-http
+  name: {{ include "sitewhere.web-rest.http" . }}
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -85,14 +85,14 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+    app.kubernetes.io/name: {{ include "sitewhere.web-rest.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Values.services.debug }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-web-rest-debug
+  name: {{ include "sitewhere.web-rest.fullname" . }}-debug
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -110,7 +110,7 @@ spec:
       protocol: TCP
       name: jmx
   selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+    app.kubernetes.io/name: {{ include "sitewhere.web-rest.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 {{- end }}

@@ -2,7 +2,7 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-tenant-management
+  name: {{ include "sitewhere.tenant-management.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -14,12 +14,12 @@ spec:
   replicas: {{ .Values.services.tenant_management.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-tenant-management
+      app.kubernetes.io/name: {{ include "sitewhere.tenant-management.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-tenant-management
+        app.kubernetes.io/name: {{ include "sitewhere.tenant-management.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "microservice"
         sitewhere.io/name: "tenant-management"
@@ -46,7 +46,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-tenant-management-svc
+  name: {{ include "sitewhere.tenant-management.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -65,14 +65,14 @@ spec:
       protocol: TCP
       name: grcp-mgn
   selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-tenant-management
+    app.kubernetes.io/name: {{ include "sitewhere.tenant-management.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Values.services.debug }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-tenant-management-debug
+  name: {{ include "sitewhere.tenant-management.fullname" . }}-debug
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -90,7 +90,7 @@ spec:
       protocol: TCP
       name: jmx
   selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-tenant-management
+    app.kubernetes.io/name: {{ include "sitewhere.tenant-management.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 {{- end }}

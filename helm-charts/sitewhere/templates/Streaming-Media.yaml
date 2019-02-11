@@ -2,7 +2,7 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-streaming-media
+  name: {{ include "sitewhere.streaming-media.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -14,12 +14,12 @@ spec:
   replicas: {{ .Values.services.streaming_media.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
+      app.kubernetes.io/name: {{ include "sitewhere.streaming-media.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
+        app.kubernetes.io/name: {{ include "sitewhere.streaming-media.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "microservice"
         sitewhere.io/name: "streaming-media"
@@ -46,7 +46,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-streaming-media-svc
+  name: {{ include "sitewhere.streaming-media.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -64,14 +64,14 @@ spec:
       protocol: TCP
       name: grcp-mgn
   selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
+    app.kubernetes.io/name: {{ include "sitewhere.streaming-media.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Values.services.debug }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-streaming-media-debug
+  name: {{ include "sitewhere.streaming-media.fullname" . }}-debug
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -89,7 +89,7 @@ spec:
       protocol: TCP
       name: jmx
   selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
+    app.kubernetes.io/name: {{ include "sitewhere.streaming-media.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 {{- end}}

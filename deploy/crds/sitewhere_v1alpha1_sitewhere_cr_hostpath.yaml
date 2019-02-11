@@ -1,7 +1,7 @@
 apiVersion: sitewhere.io/v1alpha1
 kind: SiteWhereInstance
 metadata:
-  name: example-sitewhere
+  name: sw-hostpath
 spec:
   # Default values copied from <project_dir>/helm-charts/sitewhere/values.yaml
   
@@ -15,11 +15,25 @@ spec:
         "default.replication.factor": 3
         "min.insync.replicas": 2
         "leader.imbalance.check.interval.seconds": 30
+      persistence:
+        storageClass: hostpath
       external:
         enabled: false
       zookeeper:
         service:
           type: NodePort
+        persistence:
+          storageClass: hostpath
+  sitewhere-infra-database:
+    mongodb:
+      persistence:
+        storageClass: hostpath
+    cassandra:
+      persistence:
+        storageClass: hostpath
+    influxdb:
+      persistence:
+        storageClass: hostpath
   infra:
     profile: mongodb
     image:
@@ -292,7 +306,7 @@ spec:
     # existingClaim:
 
     ## If defined, storageClassName: [rook-ceph-block|hostpath]
-    storageClass: standard
+    storageClass: hostpath
     accessModes:
       - ReadWriteOnce
     storage: 10Gi

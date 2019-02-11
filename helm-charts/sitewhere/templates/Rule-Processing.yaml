@@ -2,7 +2,7 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-rule-processing
+  name: {{ include "sitewhere.rule-processing.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -46,7 +46,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-rule-processing-svc
+  name: {{ include "sitewhere.rule-processing.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -71,7 +71,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-rule-processing-debug
+  name: {{ include "sitewhere.rule-processing.fullname" . }}-debug
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
